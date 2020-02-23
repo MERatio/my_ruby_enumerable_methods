@@ -1,12 +1,12 @@
 module Enumerable
   def my_each
-    type = self.class.name
-    if (type == "Array" || type == "Range")
+    type = self.class
+    if (type == Array || type == Range)
       arr = self.to_a
       for i in (0..arr.length - 1)
         yield(arr[i])
       end
-    elsif (type == "Hash")
+    elsif (type == Hash)
       keys = self.keys
       values = self.values
       for i in (0..self.length - 1)
@@ -18,8 +18,8 @@ module Enumerable
   end
 
   def my_each_with_index
-    type = self.class.name
-    if (type == "Array" || type == "Hash" || type == "Range")
+    type = self.class
+    if (type == Array || type == Hash || type == Range)
       arr = self.to_a
       for i in (0..arr.length - 1)
         yield(arr[i], i)
@@ -30,15 +30,15 @@ module Enumerable
   end
 
   def my_select
-    type = self.class.name
-    if (type == "Array" || type == "Range")
+    type = self.class
+    if (type == Array || type == Range)
       arr = self.to_a
       output = []
       arr.my_each do |item|
         output.push(item) if yield(item)
       end
       output
-    elsif (type == "Hash")
+    elsif (type == Hash)
       output = {}
       arr.my_each do |key, value|
         output[key] = value if (yield(key, value))
@@ -50,14 +50,14 @@ module Enumerable
   end
 
   def my_all?
-    type = self.class.name
-    if (type == "Array" || type == "Range")
+    type = self.class
+    if (type == Array || type == Range)
       arr = self.to_a
       arr.my_each do |item|
         return false unless yield(item)
       end
       return true
-    elsif (type == "Hash")
+    elsif (type == Hash)
       keys = self.keys
       values = self.values
       for i in (0..self.length - 1)
@@ -70,14 +70,14 @@ module Enumerable
   end
 
   def my_any?
-    type = self.class.name
-    if (type == "Array" || type == "Range")
+    type = self.class
+    if (type == Array || type == Range)
       arr = self.to_a
       arr.my_each do |item|
         return true if yield(item)
       end
       return false
-    elsif (type == "Hash")
+    elsif (type == Hash)
       keys = self.keys
       values = self.values
       for i in (0..self.length - 1)
@@ -90,14 +90,14 @@ module Enumerable
   end
 
   def my_none?
-    type = self.class.name
-    if (type == "Array" || type == "Range")
+    type = self.class
+    if (type == Array || type == Range)
       arr = self.to_a
       arr.my_each do |item|
         return false if yield(item)
       end
       return true
-    elsif (type == "Hash")
+    elsif (type == Hash)
       keys = self.keys
       values = self.values
       for i in (0..self.length - 1)
@@ -110,9 +110,9 @@ module Enumerable
   end
 
   def my_count(arg = nil)
-    type = self.class.name
+    type = self.class
     counter = 0
-    if (type == "Array" || type == "Range")
+    if (type == Array || type == Range)
       arr = self.to_a
       return arr.length if !block_given? && arg == nil
       arr.my_each do |item|
@@ -127,14 +127,14 @@ module Enumerable
   end
 
   def my_map
-    type = self.class.name
+    type = self.class
     result = []
-    if (type == "Array" || type == "Range")
+    if (type == Array || type == Range)
       arr = self.to_a
       arr.my_each do |item|
         result.push(yield(item))
       end
-    elsif (type == "Hash")
+    elsif (type == Hash)
       keys = self.keys
       values = self.values
       for i in (0..self.size - 1)
@@ -148,8 +148,8 @@ module Enumerable
 
   # Only accepts this = my_inject(initial) { |memo, obj| block } → obj
   def my_inject(initial = nil)
-    type = self.class.name
-    if (type == "Array" || type == "Range")
+    type = self.class
+    if (type == Array || type == Range)
       arr = self.to_a
       acc = initial || arr[0]
       for i in (0..arr.length - 1)
